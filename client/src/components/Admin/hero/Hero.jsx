@@ -23,8 +23,6 @@ const Hero = () => {
           <Routes>
             <Route path="/" element={<Listusers />} />
             <Route path="/edit/:id" element={<Edituser />} />
-            <Route path="/" element={<Listusers />} />
-
             <Route path="/add" element={<Adduser />} />
           </Routes>
         </BrowserRouter>
