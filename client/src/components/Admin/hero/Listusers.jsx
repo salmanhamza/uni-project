@@ -9,7 +9,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getUsers, deleteUser } from "../../../services/api";
 
 const StyledTable = styled(Table)({
   width: "90%",
@@ -31,6 +32,21 @@ const Tbody = styled(TableRow)`
 
 const Listusers = () => {
   const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const getAllUsers = async () => {
+    let response = await getUsers();
+    console.log(response);
+    setUsers(response.data);
+  };
+
+  const deleteUserDetails = async (id) => {
+    await deleteUser(id);
+    getAllUsers();
+  };
   return (
     <Box>
       <StyledTable>
@@ -38,8 +54,8 @@ const Listusers = () => {
           <Thead>
             <TableCell>Name</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Password</TableCell>
-            <TableCell>Type</TableCell>
+            <TableCell>Username</TableCell>
+            <TableCell>Position</TableCell>
 
             <TableCell></TableCell>
           </Thead>
@@ -49,8 +65,8 @@ const Listusers = () => {
             <Tbody key={user._id}>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{user.password}</TableCell>
-              <TableCell>{user.type}</TableCell>
+              <TableCell>{user.username}</TableCell>
+              <TableCell>{user.position}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"
@@ -63,7 +79,7 @@ const Listusers = () => {
                 <Button
                   variant="contained"
                   color="secondary"
-                  // onClick={() => deleteUserDetails(user._id)}
+                  onClick={() => deleteUserDetails(user._id)}
                 >
                   Delete
                 </Button>

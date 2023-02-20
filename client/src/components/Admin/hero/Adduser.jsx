@@ -1,7 +1,70 @@
-import React from "react";
+import {
+  Button,
+  FormControl,
+  FormGroup,
+  Input,
+  InputLabel,
+  styled,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Adduser = () => {
-  return <div>Adduser</div>;
+import { addUser } from "../../../services/api";
+
+const Container = styled(FormGroup)`
+  width: 50%;
+  margin: 5% auto 0 auto;
+  & > div {
+    margin-top: 20px;
+  }
+`;
+const defaultValue = {
+  name: "",
+  username: "",
+  email: "",
+  Position: "",
 };
 
-export default Adduser;
+const AddUser = () => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(defaultValue);
+  const onValueChage = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const AddUserDetails = async () => {
+    await addUser(user);
+    navigate("/");
+  };
+
+  return (
+    <Container>
+      <Typography variant="h4">Add User</Typography>
+      <FormControl>
+        <InputLabel>Name</InputLabel>
+        <Input onChange={(e) => onValueChage(e)} name="name" />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Username</InputLabel>
+        <Input onChange={(e) => onValueChage(e)} name="username" />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Email</InputLabel>
+        <Input onChange={(e) => onValueChage(e)} name="email" />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Position</InputLabel>
+        <Input onChange={(e) => onValueChage(e)} name="position" />
+      </FormControl>
+      <FormControl>
+        <Button variant="contained" onClick={() => AddUserDetails()}>
+          Add User
+        </Button>
+      </FormControl>
+    </Container>
+  );
+};
+
+export default AddUser;

@@ -5,6 +5,7 @@ import Adduser from "./Adduser";
 import Listusers from "./Listusers";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Edituser from "./EditUser";
 
 const Wrapper = styled(Box)`
   height: "100vh";
@@ -20,6 +21,8 @@ const Hero = () => {
       <>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Listusers />} />
+            <Route path="/edit/:id" element={<Edituser />} />
             <Route path="/" element={<Listusers />} />
 
             <Route path="/add" element={<Adduser />} />

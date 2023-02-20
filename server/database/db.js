@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const Connection = async (username, password) => {
-  const URL = `mongodb+srv://${username}:${password}@cluster0.tst8tia.mongodb.net/?retryWrites=true&w=majority`;
+dotenv.config();
 
+const connectionString = process.env.DATABASE_URL;
+
+const Connection = async () => {
   try {
-    await mongoose.connect(URL, {
+    await mongoose.connect(connectionString, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
